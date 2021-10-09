@@ -1,0 +1,42 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": "COVID-19 Active Cases per 1000 population in Malaysia (30 Sept 2021)",
+  "width": 700,
+  "height": 600,
+  "projection": {"type": "equirectangular"},
+  "data": {
+      "url": "malaysia-state.topojson.json",
+      "format": {"type": "topojson", "feature": "states"}
+    },
+    "transform": [
+      {
+        "lookup": "properties.Name",
+        "from": {
+          "data": {"url": "./clean_data/clean_cases_state.csv"},
+          "key": "state",
+          "fields": ["cases_new", "cases_active", "pop"]
+        }
+      },
+    {"calculate": "datum.cases_active/datum.pop * 1000", "as": "Confirmed per 1000 population"}
+  ],
+  "mark": {"type": "geoshape","stroke":"grey"},
+  "encoding": {
+    "color": {
+      "field": "Confirmed per 1000 population",
+      "type": "quantitative",
+      "scale": {
+        "type": "threshold",
+        "domain": [2, 6, 10],
+        "range": ["#fdbe85", "#fd8d3c", "#e6550d", "#a63603"]
+        } 
+      },
+      "tooltip": [
+        {"field": "properties.Name", "type": "nominal", "title": "State"},
+        {"field": "Confirmed per 1000 population", "type": "quantitative", "format": ".2f"} ]
+    },
+    "config": {
+      "view": {"strokeOpacity": 0, "stroke": "black"},
+      "background":"beige"
+    }
+    
+    
+}

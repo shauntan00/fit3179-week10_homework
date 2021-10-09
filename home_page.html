@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Essential Vegalite library. -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" media="all">
+
+    <title>Covid 19 in Malaysia</title>
+</head>
+
+<body>
+  <div id="page">
+    <h1>Covid 19 in Malaysia</h1>
+    <p>The first graph shows the number of active COVID-19 cases in every state of Malaysia as of 30 Sept 2021 .</p>
+     <div class="pure-g">`
+         <div class="pure-u-2-3">
+           <div id="choropleth_map"></div>
+         </div>
+         <p>The second graph shows the number of COVID-19 patients in ICU from 1 June 2021 to 30 Sept 2021</p>
+         <p id="small_font">*Choose different state to see the number of COVID-19 patients</p>
+         <div class="pure-u-2-3">
+          <div id="line_chart"></div>
+        </div>
+     </div>
+</div>
+   <script type="text/javascript">
+    var spec2 = "cases_per_1k_map.vg.json";
+        vegaEmbed('#choropleth_map', spec2).then(function(result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+    var spec3 = "icu_line_chart.vg.json";
+    vegaEmbed('#line_chart', spec3).then(function(result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+  </script>
+  </body>
+</html>

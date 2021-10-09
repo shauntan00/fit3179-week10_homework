@@ -1,0 +1,76 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": "COVID-19 Patients in ICU from 1 June 2021 to 30 September 2021",
+    "width": 700,
+    "height": 400,
+    "data": {"url": "./clean_data/clean_icu.csv"},
+    "params": [
+    {
+        "name": "State_selection",
+        "bind": {
+        "input": "select",
+        "options": [
+            "Johor",
+            "Kedah",
+            "Kelantan",
+            "Melaka",
+            "Negeri Sembilan",
+            "Pahang",
+            "Penang",
+            "Perak",
+            "Perlis",
+            "Sabah",
+            "Sarawak",
+            "Selangor",
+            "Terengganu",
+            "W.P. Kuala Lumpur",
+            "W.P. Labuan",
+            "W.P. Putrajaya"
+        ],
+        "labels": [
+            "Johor",
+            "Kedah",
+            "Kelantan",
+            "Melaka",
+            "Negeri Sembilan",
+            "Pahang",
+            "Penang",
+            "Perak",
+            "Perlis",
+            "Sabah",
+            "Sarawak",
+            "Selangor",
+            "Terengganu",
+            "Kuala Lumpur",
+            "Labuan",
+            "Putrajaya"
+        ],
+        "name": "Choose a State: "
+        },
+        "value": "Johor"
+    }
+    ],
+    "transform": [
+        {"calculate": "datetime(datum.date)", "as": "convertedDate"},
+        {
+          "calculate": "utcFormat(datum.date,'%B %d, %Y')",
+          "as": "converted as string"
+        },
+       {"filter": "datum.state == State_selection"}
+      ],
+    "mark": {"type":"line","point": true},
+    "encoding": {
+      "x": {"field": "date", "type": "temporal","title":"Date"},
+      "y": {"field": "beds_icu_covid", "type": "quantitative","title":"Total ICU Patients"},
+      "color": {"field": "state", "type": "nominal"},
+      "tooltip": [
+        {"field": "state", "type": "nominal", "title": "State"},
+        {"field": "beds_icu_covid", "type": "quantitative", "title": "ICU Bed Usage"}, 
+        {"field": "converted as string", "type": "nominal", "title":"Date"}]    
+    },
+    "config": {
+        "view": {"strokeOpacity": 0, "stroke": "black"},
+        "legend": {"orient": "right"},
+        "axis": {"grid": false},
+        "background":"beige"
+      }
+  }
